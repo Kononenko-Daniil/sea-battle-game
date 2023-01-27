@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2022/10/13 21:12:00.000.756,=C:\Users\neokv\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2022/10/13 21:12:00.000.827,=C:\Users\neokv\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2022/10/13 22:01:15.000.397,=C:\Users\neokv\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2022/10/13 22:01:15.000.352,=C:\Users\neokv\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2023/01/27 13:19:29.841,=C:\Users\neokv\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2023/01/27 13:19:30.239,=C:\Users\neokv\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2023/01/27 13:35:48.712,D:\Daniil\Projects\sea-battle-game\game\Unit1.h=C:\Users\neokv\Documents\Embarcadero\Studio\Projects\Unit1.h</Transaction>
+    <Transaction>2023/01/27 13:35:48.712,D:\Daniil\Projects\sea-battle-game\game\Unit1.dfm=C:\Users\neokv\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2023/01/27 13:35:48.712,D:\Daniil\Projects\sea-battle-game\game\Unit1.cpp=C:\Users\neokv\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2023/01/27 13:35:49.673,D:\Daniil\Projects\sea-battle-game\game\Project1PCH1.h=C:\Users\neokv\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2023/01/27 13:35:50.682,D:\Daniil\Projects\sea-battle-game\game\Project1.cbproj=C:\Users\neokv\Documents\Embarcadero\Studio\Projects\Project1.cbproj</Transaction>
+  </Transactions>
+</BorlandProject>

@@ -8463,6 +8463,7 @@ object Form1: TForm1
     000000000000000000000000000000000000000000000000000000000000}
   Menu = MainMenu1
   OldCreateOrder = False
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -8520,7 +8521,21 @@ object Form1: TForm1
       end
     end
     object N2: TMenuItem
-      Caption = #1057#1090#1080#1083#1100
+      Caption = #1050#1086#1085#1089#1090#1088#1091#1082#1090#1086#1088
+      OnClick = N2Click
     end
+    object N3: TMenuItem
+      Caption = #1053#1072#1089#1088#1086#1081#1082#1080
+      object N4: TMenuItem
+        Caption = #1048#1075#1088#1072' '#1089' '#1082#1086#1084#1087#1100#1102#1090#1077#1088#1086#1084
+      end
+      object N5: TMenuItem
+        Caption = #1048#1075#1088#1072' '#1086#1085#1083#1072#1081#1085
+      end
+    end
+  end
+  object OpenDialog1: TOpenDialog
+    Left = 560
+    Top = 328
   end
 end

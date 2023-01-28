@@ -254,6 +254,8 @@ void __fastcall TForm2::N2Click(TObject *Sender)
 			fout << pole;
 			DrawGrid1->Refresh();
 		}
+	} else {
+		ShowMessage("You can`t save sea field, until you have any ship!");
 	}
 }
 //---------------------------------------------------------------------------

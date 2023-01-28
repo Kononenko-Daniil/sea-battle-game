@@ -10,27 +10,20 @@
 #include <Vcl.Grids.hpp>
 #include <Vcl.Menus.hpp>
 #include <Vcl.Dialogs.hpp>
+#include <Vcl.Buttons.hpp>
+#include <Vcl.ExtCtrls.hpp>
+#include <Vcl.Graphics.hpp>
 //---------------------------------------------------------------------------
 class TForm1 : public TForm
 {
 __published:	// IDE-managed Components
-	TDrawGrid *DrawGrid1;
-	TDrawGrid *DrawGrid2;
-	TMainMenu *MainMenu1;
-	TMenuItem *Game1;
-	TMenuItem *Game2;
-	TMenuItem *N1;
-	TMenuItem *N2;
-	TMemo *Memo1;
-	TLabel *Label1;
-	TMenuItem *N3;
-	TMenuItem *N4;
-	TMenuItem *N5;
-	TOpenDialog *OpenDialog1;
-	void __fastcall N1Click(TObject *Sender);
-	void __fastcall Game2Click(TObject *Sender);
-	void __fastcall N2Click(TObject *Sender);
-	void __fastcall FormCreate(TObject *Sender);
+	TSpeedButton *SpeedButton1;
+	TSpeedButton *SpeedButton2;
+	TImage *Image1;
+	TImage *Image2;
+	TImage *Image3;
+	void __fastcall SpeedButton1Click(TObject *Sender);
+	void __fastcall SpeedButton2Click(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
 	__fastcall TForm1(TComponent* Owner);

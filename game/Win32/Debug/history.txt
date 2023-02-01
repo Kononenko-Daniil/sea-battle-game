@@ -1,0 +1,41 @@
+System: Game - start; Your turn;
+Me: A1 - KILL. 1-cell ship.
+Enemy: B2 - MISS.
+Me: G0 - HIT.
+Enemy: D6 - MISS.
+Me: H0 - HIT.
+Enemy: H0 - MISS.
+Me: I0 - HIT.
+Enemy: B8 - MISS.
+Me: J0 - KILL. 4-cell ship.
+Enemy: J5 - MISS.
+Me: A3 - HIT.
+Enemy: E3 - MISS.
+Me: B3 - KILL. 2-cell ship.
+Enemy: A0 - HIT.
+Me: A5 - HIT.
+Enemy: G8 - MISS.
+Me: B5 - KILL. 2-cell ship.
+Enemy: I2 - HIT.
+Me: F4 - HIT.
+Enemy: C7 - MISS.
+Me: G4 - HIT.
+Enemy: G5 - MISS.
+Me: H4 - KILL. 3-cell ship.
+Enemy: D0 - MISS.
+Me: G6 - KILL. 1-cell ship.
+Enemy: J6 - MISS.
+Me: I7 - KILL. 1-cell ship.
+Enemy: D8 - MISS.
+Me: D6 - HIT.
+Enemy: H3 - MISS.
+Me: D7 - KILL. 2-cell ship.
+Enemy: J7 - MISS.
+Me: B7 - KILL. 1-cell ship.
+Enemy: B1 - MISS.
+Me: E9 - HIT.
+Enemy: E9 - MISS.
+Me: F9 - HIT.
+Enemy: J4 - MISS.
+Me: G9 - KILL. 3-cell ship.
+System: Player winned! Game - stop.

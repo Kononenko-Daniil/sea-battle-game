@@ -37,29 +37,34 @@ __published:	// IDE-managed Components
 	TMenuItem *N1;
 	TMenuItem *N2;
 	TMenuItem *N3;
-	TOpenDialog *OpenDialog1;
-	TSaveDialog *SaveDialog1;
-	void __fastcall FormCreate(TObject *Sender);
-	void __fastcall DrawGrid1DrawCell(TObject *Sender, int ACol, int ARow, TRect &Rect,
-          TGridDrawState State);
+	TButton *Button2;
 	void __fastcall RadioButton1Click(TObject *Sender);
 	void __fastcall RadioButton2Click(TObject *Sender);
 	void __fastcall RadioButton3Click(TObject *Sender);
 	void __fastcall RadioButton4Click(TObject *Sender);
 	void __fastcall DrawGrid1SelectCell(TObject *Sender, int ACol, int ARow, bool &CanSelect);
-	void __fastcall Button1Click(TObject *Sender);
 	void __fastcall CheckBox1Click(TObject *Sender);
 	void __fastcall N2Click(TObject *Sender);
 	void __fastcall N3Click(TObject *Sender);
+	void __fastcall DrawGrid1DrawCell(TObject *Sender, int ACol, int ARow, TRect &Rect,
+          TGridDrawState State);
+	void __fastcall Button1Click(TObject *Sender);
+	void __fastcall Button2Click(TObject *Sender);
 
 
 
 private:	// User declarations
 public:		// User declarations
 	__fastcall TForm2(TComponent* Owner);
+
 	void __fastcall ChooseShipSize(int);
 	void __fastcall ChangeShipCount(int, bool);
-    bool __fastcall CheckHasShip(int);
+	void __fastcall ClearField();
+
+    TLabeledEdit& GetLabeledEditByShipSize(int);
+
+	bool __fastcall CheckHasShip(int);
+
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TForm2 *Form2;

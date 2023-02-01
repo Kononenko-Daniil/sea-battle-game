@@ -2,7 +2,7 @@ object Form2: TForm2
   Left = 0
   Top = 0
   Caption = #1052#1086#1088#1089#1082#1086#1081' '#1073#1086#1081'. '#1050#1086#1085#1089#1090#1088#1091#1082#1090#1086#1088
-  ClientHeight = 328
+  ClientHeight = 356
   ClientWidth = 669
   Color = clCream
   Font.Charset = DEFAULT_CHARSET
@@ -8463,12 +8463,11 @@ object Form2: TForm2
     000000000000000000000000000000000000000000000000000000000000}
   Menu = MainMenu1
   OldCreateOrder = False
-  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object DrawGrid1: TDrawGrid
     Left = 8
-    Top = 8
+    Top = 16
     Width = 313
     Height = 313
     ColCount = 10
@@ -8639,6 +8638,15 @@ object Form2: TForm2
     TabOrder = 8
     OnClick = CheckBox1Click
   end
+  object Button2: TButton
+    Left = 336
+    Top = 327
+    Width = 145
+    Height = 25
+    Caption = #1040#1074#1090#1086#1075#1077#1085#1077#1088#1072#1094#1080#1103
+    TabOrder = 9
+    OnClick = Button2Click
+  end
   object MainMenu1: TMainMenu
     Left = 24
     Top = 273
@@ -8653,17 +8661,5 @@ object Form2: TForm2
         OnClick = N3Click
       end
     end
-  end
-  object OpenDialog1: TOpenDialog
-    DefaultExt = '.txt'
-    Filter = 'Text files|*.txt|All|*.*'
-    Left = 96
-    Top = 272
-  end
-  object SaveDialog1: TSaveDialog
-    DefaultExt = '.txt'
-    Filter = 'Text files|*.txt|All|*.*'
-    Left = 176
-    Top = 272
   end
 end

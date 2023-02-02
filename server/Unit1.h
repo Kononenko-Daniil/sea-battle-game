@@ -8,6 +8,12 @@
 #include <Vcl.StdCtrls.hpp>
 #include <Vcl.Forms.hpp>
 #include <Vcl.Menus.hpp>
+#include "sgcBase_Classes.hpp"
+#include "sgcSocket_Classes.hpp"
+#include "sgcTCP_Classes.hpp"
+#include "sgcWebSocket.hpp"
+#include "sgcWebSocket_Classes.hpp"
+#include "sgcWebSocket_Server.hpp"
 //---------------------------------------------------------------------------
 class TForm1 : public TForm
 {
@@ -19,6 +25,7 @@ __published:	// IDE-managed Components
 	TMenuItem *N2;
 	TMenuItem *N3;
 	TMenuItem *N4;
+	TsgcWebSocketServer *sgcWebSocketServer1;
 	void __fastcall Memo1Change(TObject *Sender);
 	void __fastcall N2Click(TObject *Sender);
 	void __fastcall N3Click(TObject *Sender);

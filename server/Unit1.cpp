@@ -8,6 +8,12 @@
 
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
+#pragma link "sgcBase_Classes"
+#pragma link "sgcSocket_Classes"
+#pragma link "sgcTCP_Classes"
+#pragma link "sgcWebSocket"
+#pragma link "sgcWebSocket_Classes"
+#pragma link "sgcWebSocket_Server"
 #pragma resource "*.dfm"
 TForm1 *Form1;
 //---------------------------------------------------------------------------

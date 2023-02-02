@@ -99,12 +99,16 @@ void __fastcall TForm3::Button1Click(TObject *Sender)
 void __fastcall TForm3::N4Click(TObject *Sender)
 {
 	statusBar.gameType = COMPUTER;
+
+	NewGame();
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm3::N5Click(TObject *Sender)
 {
 	statusBar.gameType = ONLINE;
+
+    NewGame();
 }
 //---------------------------------------------------------------------------
 
@@ -217,27 +221,25 @@ void __fastcall TForm3::Button3Click(TObject *Sender)
     Form5->Show();
 }
 //---------------------------------------------------------------------------
-
-void __fastcall TForm3::N7Click(TObject *Sender)
-{
-	// Default statuses
+void __fastcall TForm3::NewGame() {
+    // Default statuses
 	statusBar = GameStatusBar();
 
 	// Clear history
 	for(int i = Memo1->Lines->Count; i >= 0; i--) {
-        Memo1->Lines->Delete(i);
+		Memo1->Lines->Delete(i);
 	}
 
 	// Clear seafields
 	myField.ClearAll();
 	enemyField.ClearAll();
 	computerEnemy.myField.ClearAll();
-    computerEnemy.myField.AutoGenerateField();
+	computerEnemy.myField.AutoGenerateField();
     computerEnemy.playerField.ClearAll();
 
 
 	// Clear ui
-    CheckBox1->Checked=false;
+	CheckBox1->Checked=false;
 	Button1->Enabled=false;
 	Button4->Enabled=true;
 	N1->Enabled=true;
@@ -249,7 +251,11 @@ void __fastcall TForm3::N7Click(TObject *Sender)
 	DrawGrid1->Refresh();
 	DrawGrid2->Refresh();
 	Form5->DrawGrid1->Refresh();
-    Form5->DrawGrid2->Refresh();
+	Form5->DrawGrid2->Refresh();
+}
+void __fastcall TForm3::N7Click(TObject *Sender)
+{
+    NewGame();
 }
 //---------------------------------------------------------------------------
 

@@ -68,7 +68,8 @@ public:		// User declarations
 	void __fastcall DrawField(SeaField&, TDrawGrid&, int, int, TRect&);
 	void __fastcall Log(String);
 	void __fastcall CreateMoveLogInfo(moveStatuses, pair<moveResults, int>&, int, int);
-    void __fastcall EndGame(String winnerName);
+	void __fastcall EndGame(String winnerName);
+    void __fastcall NewGame();
 
     SeaField myField;
 	SeaField enemyField;

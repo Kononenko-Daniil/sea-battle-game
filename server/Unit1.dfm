@@ -8467,7 +8467,7 @@ object Form1: TForm1
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
-    Left = 8
+    Left = 440
     Top = 8
     Width = 24
     Height = 13
@@ -8485,7 +8485,7 @@ object Form1: TForm1
     Left = 32
     Top = 152
     object N1: TMenuItem
-      Caption = #1051#1086#1075#1080
+      Caption = #1051#1086#1075#1080#1088#1086#1074#1072#1085#1080#1077
       object N2: TMenuItem
         Caption = #1057#1086#1093#1088#1072#1085#1080#1090#1100' '#1083#1086#1075#1080
         OnClick = N2Click

@@ -1,26 +1,26 @@
 object DataModule2: TDataModule2
   OldCreateOrder = False
-  Height = 255
-  Width = 329
+  Height = 180
+  Width = 201
   object OpenDialog1: TOpenDialog
     DefaultExt = '.txt'
     Filter = 'Text file|*.txt|All|*.*'
-    Left = 48
-    Top = 56
+    Left = 32
+    Top = 8
   end
   object SaveDialog1: TSaveDialog
     DefaultExt = '.txt'
     Filter = 'Text file|*.txt|All|*.*'
     Left = 128
-    Top = 56
+    Top = 8
   end
   object ADOTable1: TADOTable
     Active = True
     Connection = ADOConnection1
     CursorType = ctStatic
     TableName = 'GameRooms'
-    Left = 40
-    Top = 128
+    Left = 32
+    Top = 64
   end
   object ADOConnection1: TADOConnection
     Connected = True
@@ -39,11 +39,11 @@ object DataModule2: TDataModule2
     Mode = cmShareDenyNone
     Provider = 'Microsoft.Jet.OLEDB.4.0'
     Left = 128
-    Top = 128
+    Top = 64
   end
   object DataSource1: TDataSource
     DataSet = ADOTable1
-    Left = 216
-    Top = 128
+    Left = 32
+    Top = 120
   end
 end

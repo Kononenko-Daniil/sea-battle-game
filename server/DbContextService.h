@@ -1,5 +1,3 @@
-//---------------------------------------------------------------------------
-
 #ifndef DbContextServiceH
 #define DbContextServiceH
 
@@ -16,5 +14,5 @@ class DbContextService {
 	public:
 		gameRoom MapGameRoom(TFields&);
 };
-//---------------------------------------------------------------------------
+
 #endif

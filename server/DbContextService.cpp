@@ -1,8 +1,7 @@
-//---------------------------------------------------------------------------
-
 #pragma hdrstop
 
 #include "DbContextService.h"
+
 
 gameRoom DbContextService::MapGameRoom(TFields& fields) {
 	gameRoom room = {
@@ -18,5 +17,5 @@ gameRoom DbContextService::MapGameRoom(TFields& fields) {
 
     return room;
 }
-//---------------------------------------------------------------------------
+
 #pragma package(smart_init)

@@ -1,5 +1,3 @@
-//---------------------------------------------------------------------------
-
 #ifndef TypesH
 #define TypesH
 
@@ -9,6 +7,11 @@ enum requests : int {
 	CHECK_GUEST_CODE,
 	GENERATE_ROOM,
 	NOTIFY_ROOM_CHANGED_FULLNESS
+};
+
+enum roomFullness {
+	FULL,
+    PARTIAL
 };
 
 struct gameRoom {
@@ -21,13 +24,8 @@ struct gameRoomInfo {
 	int roomId, firstCode, secondCode, move;
 };
 
-enum roomFullness {
-	FULL,
-    PARTIAL
-};
-
 struct guestCodeCheckInfo {
 	bool codeIsValid, moveIsMyne, roomIsFull;
 };
-//---------------------------------------------------------------------------
+
 #endif

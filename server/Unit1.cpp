@@ -1,5 +1,3 @@
-//---------------------------------------------------------------------------
-
 #include <vcl.h>
 #pragma hdrstop
 
@@ -7,10 +5,9 @@
 #include "Unit2.h"
 
 #include "Types.h"
-
 #include <System.JSON.hpp>
 
-//---------------------------------------------------------------------------
+
 #pragma package(smart_init)
 #pragma link "sgcBase_Classes"
 #pragma link "sgcSocket_Classes"
@@ -19,54 +16,74 @@
 #pragma link "sgcWebSocket_Classes"
 #pragma link "sgcWebSocket_Server"
 #pragma resource "*.dfm"
-TForm1 *Form1;
+
 
 using namespace std;
-//---------------------------------------------------------------------------
+TForm1 *Form1;
+
+
 __fastcall TForm1::TForm1(TComponent* Owner)
-	: TForm(Owner)
-{
+							: TForm(Owner) {
+
 }
-//---------------------------------------------------------------------------
-void __fastcall TForm1::Memo1Change(TObject *Sender)
-{
+
+
+void __fastcall TForm1::Memo1Change(TObject *Sender) {
 	if(Memo1->Lines->Count > 6) {
         Memo1->ScrollBars = ssVertical;
     }
 }
-//---------------------------------------------------------------------------
-void __fastcall TForm1::N2Click(TObject *Sender)
-{
+
+
+void __fastcall TForm1::N2Click(TObject *Sender) {
 	if(DataModule2->SaveDialog1->Execute()) {
         Memo1->Lines->SaveToFile(DataModule2->SaveDialog1->FileName);
     }
 }
-//---------------------------------------------------------------------------
-void __fastcall TForm1::N3Click(TObject *Sender)
-{
+
+
+void __fastcall TForm1::N3Click(TObject *Sender) {
 	if(DataModule2->OpenDialog1->Execute()) {
         Memo1->Lines->LoadFromFile(DataModule2->OpenDialog1->FileName);
     }
 }
 
-void __fastcall TForm1::Log(String logMessage) {
-    Memo1->Lines->Add(logMessage);
-}
-//---------------------------------------------------------------------------
-void __fastcall TForm1::N4Click(TObject *Sender)
-{
+
+void __fastcall TForm1::N4Click(TObject *Sender) {
 	for(int i = Memo1->Lines->Count; i >= 0; i--) {
 		Memo1->Lines->Delete(i);
 	}
 }
-//---------------------------------------------------------------------------
-void __fastcall TForm1::FormCreate(TObject *Sender)
-{
+
+
+void __fastcall TForm1::FormCreate(TObject *Sender) {
 	Log("SYSTEM: Server successfully started. Start logging.");
 }
-//---------------------------------------------------------------------------
+
+
+void __fastcall TForm1::Log(String logMessage) {
+    Memo1->Lines->Add(logMessage);
+}
+
+
+void __fastcall TForm1::NotifyRoomChangedFullness(String playerGuid,
+													roomFullness roomStatus) {
+	TJSONObject *notifyRoomChangedFull = new TJSONObject();
+	notifyRoomChangedFull->AddPair("method", NOTIFY_ROOM_CHANGED_FULLNESS);
+	notifyRoomChangedFull->AddPair("room_is_full", roomStatus == FULL ? true : false);
+
+	String notifyRoomChangedFull_str = notifyRoomChangedFull->ToString();
+
+	sgcWebSocketServer1->WriteData(playerGuid,
+		notifyRoomChangedFull_str);
+
+	notifyRoomChangedFull->Free();
+}
+
+
 void __fastcall TForm1::DisconnectPlayerFromRoom(String playerGuid) {
 	DataModule2->ADOTable1->First();
+
 	while(!DataModule2->ADOTable1->Eof) {
 		gameRoom room = dbContext.MapGameRoom(*DataModule2->ADOTable1->Fields);
 
@@ -105,21 +122,9 @@ void __fastcall TForm1::DisconnectPlayerFromRoom(String playerGuid) {
 }
 
 
-void __fastcall TForm1::NotifyRoomChangedFullness(String playerGuid, roomFullness roomStatus) {
-    TJSONObject *notifyGameChengedFullness = new TJSONObject();
-	notifyGameChengedFullness->AddPair("method", NOTIFY_ROOM_CHANGED_FULLNESS);
-	notifyGameChengedFullness->AddPair("room_is_full", roomStatus == FULL ? true : false);
-
-	String notifyGameChengedFullness_str = notifyGameChengedFullness->ToString();
-
-	sgcWebSocketServer1->WriteData(playerGuid,
-		notifyGameChengedFullness_str);
-
-	notifyGameChengedFullness->Free();
-}
-
-
-guestCodeCheckInfo __fastcall TForm1::CheckGuestCode(int reqRoomId, int reqPlayerCode, String guid) {
+guestCodeCheckInfo __fastcall TForm1::CheckGuestCode(int reqRoomId,
+													int reqPlayerCode,
+													String guid) {
 	DataModule2->ADOTable1->First();
 
 	guestCodeCheckInfo checkInfo;
@@ -197,6 +202,7 @@ guestCodeCheckInfo __fastcall TForm1::CheckGuestCode(int reqRoomId, int reqPlaye
 	return checkInfo;
 }
 
+
 gameRoomInfo TForm1::GenerateRoom() {
     srand(time(NULL));
 
@@ -219,17 +225,20 @@ gameRoomInfo TForm1::GenerateRoom() {
 	DataModule2->ADOTable1->Post();
 
 	DataModule2->ADOTable1->Last();
+
     roomInfo.roomId = DataModule2->ADOTable1->Fields->FieldByName("RoomId")->AsInteger;
 
     return roomInfo;
 }
 
-void __fastcall TForm1::sgcWebSocketServer1Message(TsgcWSConnection *Connection, const UnicodeString Text)
-{
+
+void __fastcall TForm1::sgcWebSocketServer1Message(TsgcWSConnection *Connection,
+													const UnicodeString Text) {
 	String guid = Connection->Guid;
+	TJSONObject *request = (TJSONObject*) TJSONObject::ParseJSONValue(Text, 0);
+
 	Log(Text + " - " + guid);
 
-	TJSONObject *request = (TJSONObject*) TJSONObject::ParseJSONValue(Text, 0);
 	if(request != NULL) {
 		TJSONObject *response = new TJSONObject();
 
@@ -245,6 +254,7 @@ void __fastcall TForm1::sgcWebSocketServer1Message(TsgcWSConnection *Connection,
 				int playerCode = StrToInt(request->GetValue("player_code")->Value());
 
 				guestCodeCheckInfo checkResult = CheckGuestCode(roomId, playerCode, guid);
+
 				bool codeStatus = checkResult.codeIsValid;
 				bool isMyMove = checkResult.moveIsMyne;
 				bool roomIsFull = checkResult.roomIsFull;
@@ -275,22 +285,18 @@ void __fastcall TForm1::sgcWebSocketServer1Message(TsgcWSConnection *Connection,
 
 	request->Free();
 }
-//---------------------------------------------------------------------------
 
 
 void __fastcall TForm1::sgcWebSocketServer1Disconnect(TsgcWSConnection *Connection,
-          int Code)
-{
+													int Code) {
     String guid = Connection->Guid;
 	Log("Player disconnected - " + guid);
 	DisconnectPlayerFromRoom(guid);
 }
-//---------------------------------------------------------------------------
 
-void __fastcall TForm1::sgcWebSocketServer1Connect(TsgcWSConnection *Connection)
-{
+
+void __fastcall TForm1::sgcWebSocketServer1Connect(TsgcWSConnection *Connection) {
     String guid = Connection->Guid;
     Log("Player connected - " + guid);
 }
-//---------------------------------------------------------------------------
 

@@ -4,8 +4,8 @@
 #pragma hdrstop
 #include <tchar.h>
 //---------------------------------------------------------------------------
-USEFORM("Unit1.cpp", Form1);
 USEFORM("Unit2.cpp", DataModule2); /* TDataModule: File Type */
+USEFORM("Unit1.cpp", Form1);
 //---------------------------------------------------------------------------
 int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 {

@@ -13,6 +13,9 @@ class ServiceWorker {
 		Constants constants;
 	public:
 		char GetLetterByNumber(int);
+		String GenerateClientId();
+
+		void ChangeConnectionStatusUI(connectionStatuses, TLabel&);
 };
 //---------------------------------------------------------------------------
 #endif

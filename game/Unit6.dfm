@@ -1,10 +1,10 @@
-object Form1: TForm1
+object Form6: TForm6
   Left = 0
   Top = 0
-  Caption = 'Server - '#1052#1086#1088#1089#1082#1086#1081' '#1073#1086#1081
-  ClientHeight = 426
-  ClientWidth = 609
-  Color = clBtnFace
+  Caption = #1052#1086#1088#1089#1082#1086#1081' '#1073#1086#1081'. '#1053#1072#1089#1090#1088#1086#1081#1082#1072' '#1086#1085#1083#1072#1081#1085' '#1089#1086#1077#1076#1080#1085#1077#1085#1080#1103
+  ClientHeight = 513
+  ClientWidth = 417
+  Color = clCream
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -8461,141 +8461,205 @@ object Form1: TForm1
     0000000000000000000000000000000000000000000000000000000000000000
     0000000000000000000000000000000000000000000000000000000000000000
     000000000000000000000000000000000000000000000000000000000000}
-  Menu = MainMenu1
   OldCreateOrder = False
-  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object Label1: TLabel
-    Left = 576
-    Top = 8
-    Width = 24
+  object Label5: TLabel
+    Left = 203
+    Top = 266
+    Width = 18
     Height = 13
-    Caption = #1051#1086#1075#1080
+    Caption = #1080#1083#1080
   end
-  object Memo1: TMemo
-    Left = 8
-    Top = 24
-    Width = 592
-    Height = 177
+  object Panel1: TPanel
+    Left = 118
+    Top = 16
+    Width = 193
+    Height = 33
+    Color = clWhite
+    ParentBackground = False
     TabOrder = 0
-    OnChange = Memo1Change
-  end
-  object DBGrid1: TDBGrid
-    Left = 8
-    Top = 207
-    Width = 593
-    Height = 152
-    DataSource = DataModule2.DataSource1
-    TabOrder = 1
-    TitleFont.Charset = DEFAULT_CHARSET
-    TitleFont.Color = clWindowText
-    TitleFont.Height = -11
-    TitleFont.Name = 'Tahoma'
-    TitleFont.Style = []
-    Columns = <
-      item
-        Expanded = False
-        FieldName = 'RoomId'
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'InviteCodeFirst'
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'InviteCodeSecond'
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'CodeIsUsedFirst'
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'CodeIsUsedSecond'
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'GuidFirst'
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'GuidSecond'
-        Width = 250
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'Move'
-        Visible = True
-      end>
-  end
-  object DBNavigator1: TDBNavigator
-    Left = 8
-    Top = 365
-    Width = 240
-    Height = 25
-    DataSource = DataModule2.DataSource1
-    TabOrder = 2
-  end
-  object MainMenu1: TMainMenu
-    Left = 32
-    Top = 152
-    object N1: TMenuItem
-      Caption = #1051#1086#1075#1080#1088#1086#1074#1072#1085#1080#1077
-      object N2: TMenuItem
-        Caption = #1057#1086#1093#1088#1072#1085#1080#1090#1100' '#1083#1086#1075#1080
-        OnClick = N2Click
-      end
-      object N3: TMenuItem
-        Caption = #1047#1072#1075#1088#1091#1079#1080#1090#1100' '#1083#1086#1075#1080
-        OnClick = N3Click
-      end
-      object N4: TMenuItem
-        Caption = #1054#1095#1080#1089#1090#1080#1090#1100' '#1083#1086#1075#1080
-        OnClick = N4Click
-      end
+    object Label1: TLabel
+      Left = 8
+      Top = 8
+      Width = 95
+      Height = 13
+      Caption = 'Connection Status -'
+    end
+    object Label2: TLabel
+      Left = 109
+      Top = 8
+      Width = 78
+      Height = 13
+      Caption = 'DISCONNECTED'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
     end
   end
-  object sgcWebSocketServer1: TsgcWebSocketServer
+  object Button1: TButton
+    Left = 118
+    Top = 55
+    Width = 84
+    Height = 25
+    Caption = 'Connect'
+    TabOrder = 1
+    OnClick = Button1Click
+  end
+  object Button2: TButton
+    Left = 227
+    Top = 55
+    Width = 84
+    Height = 25
+    Caption = 'Disconnect'
+    TabOrder = 2
+    OnClick = Button2Click
+  end
+  object Panel2: TPanel
+    Left = 88
+    Top = 104
+    Width = 249
+    Height = 161
+    Color = clWhite
+    ParentBackground = False
+    TabOrder = 3
+    object Label3: TLabel
+      Left = 19
+      Top = 8
+      Width = 212
+      Height = 13
+      Caption = #1055#1086#1076#1082#1083#1102#1095#1080#1090#1100#1089#1103' '#1082' '#1089#1091#1097#1077#1089#1090#1074#1091#1102#1097#1077#1081' '#1082#1086#1084#1085#1072#1090#1077
+    end
+    object Label6: TLabel
+      Left = 72
+      Top = 140
+      Width = 3
+      Height = 13
+      Alignment = taCenter
+    end
+    object LabeledEdit1: TLabeledEdit
+      Left = 8
+      Top = 42
+      Width = 233
+      Height = 21
+      Alignment = taCenter
+      EditLabel.Width = 112
+      EditLabel.Height = 13
+      EditLabel.Caption = #1042#1074#1077#1076#1080#1090#1077' '#1082#1086#1076' '#1082#1086#1084#1085#1072#1090#1099
+      Enabled = False
+      TabOrder = 0
+    end
+    object Button4: TButton
+      Left = 72
+      Top = 109
+      Width = 105
+      Height = 25
+      Caption = #1055#1086#1076#1082#1083#1102#1095#1080#1090#1100#1089#1103
+      TabOrder = 1
+      OnClick = Button4Click
+    end
+    object LabeledEdit5: TLabeledEdit
+      Left = 8
+      Top = 82
+      Width = 233
+      Height = 21
+      Alignment = taCenter
+      EditLabel.Width = 158
+      EditLabel.Height = 13
+      EditLabel.Caption = #1042#1074#1077#1076#1080#1090#1077' '#1087#1088#1080#1075#1083#1072#1089#1080#1090#1077#1083#1100#1085#1099#1081' '#1082#1086#1076
+      Enabled = False
+      TabOrder = 2
+    end
+  end
+  object Panel3: TPanel
+    Left = 88
+    Top = 285
+    Width = 249
+    Height = 214
+    Color = clWhite
+    ParentBackground = False
+    TabOrder = 4
+    object Label4: TLabel
+      Left = 64
+      Top = 8
+      Width = 124
+      Height = 13
+      Caption = #1057#1086#1079#1076#1072#1090#1100' '#1085#1086#1074#1091#1102' '#1082#1086#1084#1085#1072#1090#1091
+    end
+    object LabeledEdit2: TLabeledEdit
+      Left = 8
+      Top = 88
+      Width = 233
+      Height = 21
+      Alignment = taCenter
+      EditLabel.Width = 129
+      EditLabel.Height = 13
+      EditLabel.Caption = #1048#1076#1077#1085#1090#1080#1092#1080#1082#1072#1090#1086#1088' '#1082#1086#1084#1085#1072#1090#1099
+      Enabled = False
+      TabOrder = 0
+    end
+    object Button3: TButton
+      Left = 72
+      Top = 35
+      Width = 107
+      Height = 25
+      Caption = #1057#1086#1079#1076#1072#1090#1100
+      Enabled = False
+      TabOrder = 1
+      OnClick = Button3Click
+    end
+    object LabeledEdit3: TLabeledEdit
+      Left = 8
+      Top = 136
+      Width = 233
+      Height = 21
+      Alignment = taCenter
+      EditLabel.Width = 65
+      EditLabel.Height = 13
+      EditLabel.Caption = #1050#1086#1076' I '#1080#1075#1088#1086#1082#1072
+      Enabled = False
+      TabOrder = 2
+    end
+    object LabeledEdit4: TLabeledEdit
+      Left = 8
+      Top = 184
+      Width = 233
+      Height = 21
+      Alignment = taCenter
+      EditLabel.Width = 69
+      EditLabel.Height = 13
+      EditLabel.Caption = #1050#1086#1076' II '#1080#1075#1088#1086#1082#1072
+      Enabled = False
+      TabOrder = 3
+    end
+  end
+  object sgcWebSocketClient1: TsgcWebSocketClient
     Active = True
+    Host = 'localhost'
     Port = 80
-    OnConnect = sgcWebSocketServer1Connect
-    OnMessage = sgcWebSocketServer1Message
-    OnDisconnect = sgcWebSocketServer1Disconnect
-    LoadBalancer.AutoRegisterBindings = False
-    LoadBalancer.AutoRestart = 0
-    LoadBalancer.Enabled = False
-    LoadBalancer.Port = 0
-    Authentication.Enabled = False
-    Authentication.AllowNonAuth = False
-    Authentication.URL.Enabled = True
-    Authentication.Session.Enabled = True
-    Authentication.Basic.Enabled = False
-    Bindings = <>
+    ConnectTimeout = 0
+    ReadTimeout = -1
+    WriteTimeout = 0
+    TLS = False
+    Proxy.Enabled = False
+    Proxy.Port = 8080
+    Proxy.ProxyType = pxyHTTP
     HeartBeat.Enabled = False
     HeartBeat.Interval = 300
     HeartBeat.Timeout = 0
-    MaxConnections = 0
-    SSLOptions.VerifyCertificate = False
-    SSLOptions.VerifyDepth = 0
-    SSLOptions.Version = tlsUndefined
-    SSLOptions.OpenSSL_Options.APIVersion = oslAPI_1_0
-    SSLOptions.OpenSSL_Options.LibPath = oslpNone
-    SSLOptions.OpenSSL_Options.UnixSymLinks = oslsSymLinksDefault
-    SSLOptions.OpenSSL_Options.ECDHE = False
-    SSLOptions.Port = 0
-    SSLOptions.VerifyCertificate_Options.FailIfNoCertificate = False
-    SSLOptions.VerifyCertificate_Options.VerifyClientOnce = False
-    ThreadPool = False
-    ThreadPoolOptions.MaxThreads = 0
-    ThreadPoolOptions.PoolSize = 32
+    IPVersion = Id_IPv4
+    OnConnect = sgcWebSocketClient1Connect
+    OnMessage = sgcWebSocketClient1Message
+    OnDisconnect = sgcWebSocketClient1Disconnect
+    Authentication.Enabled = False
+    Authentication.URL.Enabled = True
+    Authentication.Session.Enabled = False
+    Authentication.Basic.Enabled = False
+    Authentication.Token.Enabled = False
+    Authentication.Token.AuthName = 'Bearer'
     Extensions.DeflateFrame.Enabled = False
     Extensions.DeflateFrame.WindowBits = 15
     Extensions.PerMessage_Deflate.Enabled = False
@@ -8604,50 +8668,34 @@ object Form1: TForm1
     Extensions.PerMessage_Deflate.MemLevel = 9
     Extensions.PerMessage_Deflate.ServerMaxWindowBits = 15
     Extensions.PerMessage_Deflate.ServerNoContextTakeOver = False
-    FallBack.Flash.Domain = '*'
-    FallBack.Flash.Enabled = False
-    FallBack.Flash.Ports = '*'
-    FallBack.ServerSentEvents.Enabled = False
-    FallBack.ServerSentEvents.Retry = 3000
     Options.FragmentedMessages = frgOnlyBuffer
-    Options.HTMLFiles = False
-    Options.JavascriptFiles = True
-    Options.ReadTimeOut = 10
-    Options.WriteTimeOut = 0
+    Options.Parameters = '/'
     Options.RaiseDisconnectExceptions = True
     Options.ValidateUTF8 = False
-    QueueOptions.Binary.Level = qmNone
-    QueueOptions.Ping.Level = qmNone
-    QueueOptions.Text.Level = qmNone
-    Specifications.Drafts.Hixie76 = True
+    Specifications.Drafts.Hixie76 = False
     Specifications.RFC6455 = True
     NotifyEvents = neAsynchronous
     LogFile.Enabled = False
-    Throttle.BitsPerSec = 0
-    Throttle.Enabled = False
+    QueueOptions.Binary.Level = qmNone
+    QueueOptions.Ping.Level = qmNone
+    QueueOptions.Text.Level = qmNone
     WatchDog.Attempts = 0
     WatchDog.Enabled = False
-    WatchDog.Interval = 60
-    WatchDog.Monitor.Enabled = False
-    WatchDog.Monitor.Timeout = 10
-    IOHandlerOptions.IOCP.WorkOpThreads = 0
-    IOHandlerOptions.IOCP.IOCPThreads = 0
-    IOHandlerOptions.IOCP.TimeOut = 30000
-    IOHandlerOptions.EPOLL.WorkOpThreads = 0
-    IOHandlerOptions.EPOLL.EPOLLThreads = 0
-    IOHandlerOptions.IOHandlerType = iohDefault
-    HTTP2Options.AltSvc.Enabled = True
-    HTTP2Options.Enabled = False
-    HTTP2Options.Events.OnConnect = False
-    HTTP2Options.Events.OnDisconnect = False
-    HTTP2Options.FragmentedData = h2fdOnlyBuffer
-    HTTP2Options.Settings.EnablePush = True
-    HTTP2Options.Settings.HeaderTableSize = 4096
-    HTTP2Options.Settings.InitialWindowSize = 65535
-    HTTP2Options.Settings.MaxConcurrentStreams = 2147483647
-    HTTP2Options.Settings.MaxFrameSize = 16384
-    HTTP2Options.Settings.MaxHeaderListSize = 2147483647
-    Left = 120
-    Top = 152
+    WatchDog.Interval = 10
+    Throttle.BitsPerSec = 0
+    Throttle.Enabled = False
+    LoadBalancer.Enabled = False
+    LoadBalancer.Port = 0
+    TLSOptions.VerifyCertificate = False
+    TLSOptions.VerifyDepth = 0
+    TLSOptions.Version = tlsUndefined
+    TLSOptions.IOHandler = iohOpenSSL
+    TLSOptions.OpenSSL_Options.APIVersion = oslAPI_1_0
+    TLSOptions.OpenSSL_Options.LibPath = oslpNone
+    TLSOptions.OpenSSL_Options.UnixSymLinks = oslsSymLinksDefault
+    TLSOptions.SChannel_Options.CertStoreName = scsnMY
+    TLSOptions.SChannel_Options.CertStorePath = scspStoreCurrentUser
+    Left = 48
+    Top = 16
   end
 end

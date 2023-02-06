@@ -24,5 +24,23 @@ enum moveStatuses {
 	MINE,
     ENEMY
 };
+
+enum connectionStatuses {
+	CONNECTED,
+    DISCONNECTED
+};
+
+enum requests {
+	CHECK_GUEST_CODE,
+	GENERATE_ROOM,
+    NOTIFY_ROOM_CHANGED_FULLNESS
+};
+
+struct EnvironmentProperties {
+	int roomId;
+	int playerCode;
+	bool isMyMove;
+    bool isRoomFull;
+};
 //---------------------------------------------------------------------------
 #endif

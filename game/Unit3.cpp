@@ -8,6 +8,7 @@
 #include "Unit2.h"
 #include "Unit4.h"
 #include "Unit5.h"
+#include "Unit6.h"
 
 #include "Types.h"
 
@@ -23,7 +24,17 @@ TForm3 *Form3;
 
 
 __fastcall TForm3::TForm3(TComponent* Owner) : TForm(Owner){
+	envProps = {
+		-1, -1, false, false
+    };
+}
 
+
+void TForm3::UpdateRoomInfo() {
+	Panel2->Caption = IntToStr(envProps.roomId) + "-" +
+						IntToStr(envProps.playerCode) + "-" +
+						(envProps.isMyMove ? "my move" : "enemy`s move") + "-" +
+						(envProps.isRoomFull? "room is full" : "wait players");
 }
 
 
@@ -61,7 +72,12 @@ void __fastcall TForm3::N2Click(TObject *Sender)
 		DrawGrid1->Refresh();
 		statusBar.fieldFileIsUploaded = true;
 
-		Button1->Enabled = true;
+		if(statusBar.gameType == COMPUTER){
+			Button1->Enabled = true;
+		} else {
+			Button2->Enabled=true;
+        }
+
 	}
 }
 //---------------------------------------------------------------------------
@@ -108,7 +124,12 @@ void __fastcall TForm3::N5Click(TObject *Sender)
 {
 	statusBar.gameType = ONLINE;
 
-    NewGame();
+	NewGame();
+
+	Label4->Visible=true;
+	Button2->Visible=true;
+
+    Form6->Show();
 }
 //---------------------------------------------------------------------------
 
@@ -246,6 +267,9 @@ void __fastcall TForm3::NewGame() {
     N2->Enabled=true;
 	N3->Enabled=true;
 	N6->Enabled=true;
+	Label4->Visible=false;
+	Button2->Visible=false;
+    Button2->Enabled=false;
 
     // Refresh Grids
 	DrawGrid1->Refresh();

@@ -2,7 +2,7 @@ object Form3: TForm3
   Left = 0
   Top = 0
   Caption = #1052#1086#1088#1089#1082#1086#1081' '#1073#1086#1081'. '#1048#1075#1088#1072
-  ClientHeight = 465
+  ClientHeight = 487
   ClientWidth = 665
   Color = clCream
   Font.Charset = DEFAULT_CHARSET
@@ -8525,10 +8525,25 @@ object Form3: TForm3
   end
   object Panel1: TPanel
     Left = 343
-    Top = 346
-    Width = 274
-    Height = 111
+    Top = 362
+    Width = 314
+    Height = 95
     TabOrder = 3
+    object Label4: TLabel
+      Left = 223
+      Top = 71
+      Width = 78
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'DISCONNECTED'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      Visible = False
+    end
     object Button1: TButton
       Left = 8
       Top = 9
@@ -8541,7 +8556,7 @@ object Form3: TForm3
     end
     object CheckBox1: TCheckBox
       Left = 8
-      Top = 80
+      Top = 71
       Width = 121
       Height = 17
       Caption = #1054#1090#1086#1073#1088#1072#1078#1072#1090#1100' '#1086#1088#1077#1086#1083#1099
@@ -8551,8 +8566,8 @@ object Form3: TForm3
     object Button3: TButton
       Left = 135
       Top = 8
-      Width = 130
-      Height = 58
+      Width = 170
+      Height = 26
       Caption = #1055#1086#1082#1072#1079#1072#1090#1100' '#1087#1086#1083#1077' '#1087#1088#1086#1090#1080#1074#1085#1080#1082#1072
       TabOrder = 2
       WordWrap = True
@@ -8567,6 +8582,23 @@ object Form3: TForm3
       TabOrder = 3
       OnClick = Button4Click
     end
+    object Button2: TButton
+      Left = 135
+      Top = 40
+      Width = 170
+      Height = 25
+      Caption = #1043#1086#1090#1086#1074' '#1082' '#1087#1072#1088#1090#1080#1080
+      Enabled = False
+      TabOrder = 4
+      Visible = False
+    end
+  end
+  object Panel2: TPanel
+    Left = 343
+    Top = 463
+    Width = 314
+    Height = 20
+    TabOrder = 4
   end
   object MainMenu1: TMainMenu
     Left = 32

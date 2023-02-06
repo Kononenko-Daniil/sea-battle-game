@@ -1,35 +1,27 @@
 //---------------------------------------------------------------------------
 
-#ifndef Unit2H
-#define Unit2H
+#ifndef Unit3H
+#define Unit3H
 //---------------------------------------------------------------------------
 #include <System.Classes.hpp>
-#include <Vcl.Dialogs.hpp>
-#include <Data.DB.hpp>
-#include <Data.Win.ADODB.hpp>
 #include <IdBaseComponent.hpp>
 #include <IdComponent.hpp>
 #include <IdCustomHTTPServer.hpp>
 #include <IdCustomTCPServer.hpp>
 #include <IdHTTPServer.hpp>
-
-
-
+#include <IdContext.hpp>
 //---------------------------------------------------------------------------
-class TDataModule2 : public TDataModule
+class TDataModule3 : public TDataModule
 {
 __published:	// IDE-managed Components
-	TOpenDialog *OpenDialog1;
-	TSaveDialog *SaveDialog1;
-	TADOTable *ADOTable1;
-	TADOConnection *ADOConnection1;
-	TDataSource *DataSource1;
-
+	TIdHTTPServer *IdHTTPServer1;
+	void __fastcall IdHTTPServer1CommandGet(TIdContext *AContext, TIdHTTPRequestInfo *ARequestInfo,
+          TIdHTTPResponseInfo *AResponseInfo);
 private:	// User declarations
 public:		// User declarations
-	__fastcall TDataModule2(TComponent* Owner);
+	__fastcall TDataModule3(TComponent* Owner);
 };
 //---------------------------------------------------------------------------
-extern PACKAGE TDataModule2 *DataModule2;
+extern PACKAGE TDataModule3 *DataModule3;
 //---------------------------------------------------------------------------
 #endif

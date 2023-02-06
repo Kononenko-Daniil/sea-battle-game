@@ -15,12 +15,19 @@
 #pragma link "sgcWebSocket_Classes"
 #pragma link "sgcWebSocket_Server"
 #pragma resource "*.dfm"
+
+using namespace std;
 TDataModule2 *DataModule2;
+
+int newClientId = 0;
 //---------------------------------------------------------------------------
 __fastcall TDataModule2::TDataModule2(TComponent* Owner)
 	: TDataModule(Owner)
 {
 	OpenDialog1->InitialDir = ExtractFilePath(ParamStr(0));
-    SaveDialog1->InitialDir = ExtractFilePath(ParamStr(0));
+	SaveDialog1->InitialDir = ExtractFilePath(ParamStr(0));
+
+    DataModule2->ADOTable1->Active = true;
 }
 //---------------------------------------------------------------------------
+

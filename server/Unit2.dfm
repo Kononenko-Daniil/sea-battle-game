@@ -1,91 +1,7 @@
 object DataModule2: TDataModule2
   OldCreateOrder = False
-  Height = 150
-  Width = 215
-  object sgcWebSocketServer1: TsgcWebSocketServer
-    Active = True
-    Port = 3030
-    LoadBalancer.AutoRegisterBindings = False
-    LoadBalancer.AutoRestart = 0
-    LoadBalancer.Enabled = False
-    LoadBalancer.Port = 0
-    Authentication.Enabled = False
-    Authentication.AllowNonAuth = False
-    Authentication.URL.Enabled = True
-    Authentication.Session.Enabled = True
-    Authentication.Basic.Enabled = False
-    Bindings = <>
-    HeartBeat.Enabled = False
-    HeartBeat.Interval = 300
-    HeartBeat.Timeout = 0
-    MaxConnections = 0
-    SSLOptions.VerifyCertificate = False
-    SSLOptions.VerifyDepth = 0
-    SSLOptions.Version = tlsUndefined
-    SSLOptions.OpenSSL_Options.APIVersion = oslAPI_1_0
-    SSLOptions.OpenSSL_Options.LibPath = oslpNone
-    SSLOptions.OpenSSL_Options.UnixSymLinks = oslsSymLinksDefault
-    SSLOptions.OpenSSL_Options.ECDHE = False
-    SSLOptions.Port = 0
-    SSLOptions.VerifyCertificate_Options.FailIfNoCertificate = False
-    SSLOptions.VerifyCertificate_Options.VerifyClientOnce = False
-    ThreadPool = False
-    ThreadPoolOptions.MaxThreads = 0
-    ThreadPoolOptions.PoolSize = 32
-    Extensions.DeflateFrame.Enabled = False
-    Extensions.DeflateFrame.WindowBits = 15
-    Extensions.PerMessage_Deflate.Enabled = False
-    Extensions.PerMessage_Deflate.ClientMaxWindowBits = 15
-    Extensions.PerMessage_Deflate.ClientNoContextTakeOver = False
-    Extensions.PerMessage_Deflate.MemLevel = 9
-    Extensions.PerMessage_Deflate.ServerMaxWindowBits = 15
-    Extensions.PerMessage_Deflate.ServerNoContextTakeOver = False
-    FallBack.Flash.Domain = '*'
-    FallBack.Flash.Enabled = False
-    FallBack.Flash.Ports = '*'
-    FallBack.ServerSentEvents.Enabled = False
-    FallBack.ServerSentEvents.Retry = 3000
-    Options.FragmentedMessages = frgOnlyBuffer
-    Options.HTMLFiles = False
-    Options.JavascriptFiles = True
-    Options.ReadTimeOut = 10
-    Options.WriteTimeOut = 0
-    Options.RaiseDisconnectExceptions = True
-    Options.ValidateUTF8 = False
-    QueueOptions.Binary.Level = qmNone
-    QueueOptions.Ping.Level = qmNone
-    QueueOptions.Text.Level = qmNone
-    Specifications.Drafts.Hixie76 = True
-    Specifications.RFC6455 = True
-    NotifyEvents = neAsynchronous
-    LogFile.Enabled = False
-    Throttle.BitsPerSec = 0
-    Throttle.Enabled = False
-    WatchDog.Attempts = 0
-    WatchDog.Enabled = False
-    WatchDog.Interval = 60
-    WatchDog.Monitor.Enabled = False
-    WatchDog.Monitor.Timeout = 10
-    IOHandlerOptions.IOCP.WorkOpThreads = 0
-    IOHandlerOptions.IOCP.IOCPThreads = 0
-    IOHandlerOptions.IOCP.TimeOut = 30000
-    IOHandlerOptions.EPOLL.WorkOpThreads = 0
-    IOHandlerOptions.EPOLL.EPOLLThreads = 0
-    IOHandlerOptions.IOHandlerType = iohDefault
-    HTTP2Options.AltSvc.Enabled = True
-    HTTP2Options.Enabled = False
-    HTTP2Options.Events.OnConnect = False
-    HTTP2Options.Events.OnDisconnect = False
-    HTTP2Options.FragmentedData = h2fdOnlyBuffer
-    HTTP2Options.Settings.EnablePush = True
-    HTTP2Options.Settings.HeaderTableSize = 4096
-    HTTP2Options.Settings.InitialWindowSize = 65535
-    HTTP2Options.Settings.MaxConcurrentStreams = 2147483647
-    HTTP2Options.Settings.MaxFrameSize = 16384
-    HTTP2Options.Settings.MaxHeaderListSize = 2147483647
-    Left = 48
-    Top = 8
-  end
+  Height = 255
+  Width = 329
   object OpenDialog1: TOpenDialog
     DefaultExt = '.txt'
     Filter = 'Text file|*.txt|All|*.*'
@@ -97,5 +13,37 @@ object DataModule2: TDataModule2
     Filter = 'Text file|*.txt|All|*.*'
     Left = 128
     Top = 56
+  end
+  object ADOTable1: TADOTable
+    Active = True
+    Connection = ADOConnection1
+    CursorType = ctStatic
+    TableName = 'GameRooms'
+    Left = 40
+    Top = 128
+  end
+  object ADOConnection1: TADOConnection
+    Connected = True
+    ConnectionString = 
+      'Provider=Microsoft.Jet.OLEDB.4.0;User ID=Admin;Data Source=D:\Da' +
+      'niil\Projects\sea-battle-game\server\Win32\Debug\ship_war.mdb;Mo' +
+      'de=Share Deny None;Persist Security Info=False;Jet OLEDB:System ' +
+      'database="";Jet OLEDB:Registry Path="";Jet OLEDB:Database Passwo' +
+      'rd="";Jet OLEDB:Engine Type=5;Jet OLEDB:Database Locking Mode=1;' +
+      'Jet OLEDB:Global Partial Bulk Ops=2;Jet OLEDB:Global Bulk Transa' +
+      'ctions=1;Jet OLEDB:New Database Password="";Jet OLEDB:Create Sys' +
+      'tem Database=False;Jet OLEDB:Encrypt Database=False;Jet OLEDB:Do' +
+      'n'#39't Copy Locale on Compact=False;Jet OLEDB:Compact Without Repli' +
+      'ca Repair=False;Jet OLEDB:SFP=False'
+    LoginPrompt = False
+    Mode = cmShareDenyNone
+    Provider = 'Microsoft.Jet.OLEDB.4.0'
+    Left = 128
+    Top = 128
+  end
+  object DataSource1: TDataSource
+    DataSet = ADOTable1
+    Left = 216
+    Top = 128
   end
 end

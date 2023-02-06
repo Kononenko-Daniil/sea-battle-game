@@ -45,6 +45,9 @@ __published:	// IDE-managed Components
 	TMenuItem *N7;
 	TMenuItem *N8;
 	TButton *Button4;
+	TLabel *Label4;
+	TButton *Button2;
+	TPanel *Panel2;
 	void __fastcall DrawGrid1DrawCell(TObject *Sender, int ACol, int ARow, TRect &Rect,
           TGridDrawState State);
 	void __fastcall DrawGrid2DrawCell(TObject *Sender, int ACol, int ARow, TRect &Rect,
@@ -69,7 +72,8 @@ public:		// User declarations
 	void __fastcall Log(String);
 	void __fastcall CreateMoveLogInfo(moveStatuses, pair<moveResults, int>&, int, int);
 	void __fastcall EndGame(String winnerName);
-    void __fastcall NewGame();
+	void __fastcall NewGame();
+    void __fastcall UpdateRoomInfo();
 
     SeaField myField;
 	SeaField enemyField;
@@ -77,6 +81,7 @@ public:		// User declarations
 	Constants constants;
 	ServiceWorker worker;
 	GameStatusBar statusBar;
+    EnvironmentProperties envProps;
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TForm3 *Form3;

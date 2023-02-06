@@ -12,17 +12,29 @@
 #include "sgcWebSocket_Classes.hpp"
 #include "sgcWebSocket_Classes_Indy.hpp"
 #include "sgcWebSocket_Client.hpp"
+
+#include "Types.h"
+#include "ServiceWorker.h"
+#include <IdBaseComponent.hpp>
+#include <IdComponent.hpp>
+#include <IdHTTP.hpp>
+#include <IdTCPClient.hpp>
+#include <IdTCPConnection.hpp>
+
+using namespace std;
 //---------------------------------------------------------------------------
 class TDataModule4 : public TDataModule
 {
 __published:	// IDE-managed Components
 	TOpenDialog *OpenDialog1;
 	TSaveDialog *SaveDialog1;
-	TsgcWebSocketClient *sgcWebSocketClient1;
 	void __fastcall DataModuleCreate(TObject *Sender);
+
 private:	// User declarations
 public:		// User declarations
 	__fastcall TDataModule4(TComponent* Owner);
+
+    ServiceWorker worker;
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TDataModule4 *DataModule4;

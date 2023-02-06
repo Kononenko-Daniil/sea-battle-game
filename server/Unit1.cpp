@@ -85,39 +85,37 @@ void __fastcall TForm1::DisconnectPlayerFromRoom(String playerGuid) {
 	DataModule2->ADOTable1->First();
 
 	while(!DataModule2->ADOTable1->Eof) {
+        int playerNumber = 0;
 		gameRoom room = dbContext.MapGameRoom(*DataModule2->ADOTable1->Fields);
 
 		if(room.firstPlayerGuid == playerGuid) {
-			DataModule2->ADOTable1->Edit();
+			playerNumber = 1;
+		} else if(room.secondPlayerGuid == playerGuid) {
+			playerNumber = 2;
+		}
+
+		if(playerNumber) {
+            DataModule2->ADOTable1->Edit();
 			DataModule2->ADOTable1->Fields->
-				FieldByName("GuidFirst")->Value="";
+				FieldByName(playerNumber == 1 ? "GuidFirst" : "GuidSecond")->
+				Value="";
 			DataModule2->ADOTable1->Fields->
-				FieldByName("CodeIsUsedFirst")->Value=false;
+				FieldByName(playerNumber == 1 ? "CodeIsUsedFirst" : "CodeIsUsedSecond")->
+				Value=false;
 			DataModule2->ADOTable1->Post();
 
 			if(room.codeIsUsedSecond) {
-				NotifyRoomChangedFullness(room.secondPlayerGuid, PARTIAL);
+				NotifyRoomChangedFullness(
+					playerNumber == 1 ? room.secondPlayerGuid : room.firstPlayerGuid,
+					PARTIAL
+				);
 			}
 
 			break;
-		} else if(room.secondPlayerGuid == playerGuid) {
-			DataModule2->ADOTable1->Edit();
-			DataModule2->ADOTable1->Fields->
-				FieldByName("GuidSecond")->Value="";
-			DataModule2->ADOTable1->Fields->
-				FieldByName("CodeIsUsedSecond")->Value=false;
-			DataModule2->ADOTable1->Post();
-
-			if(room.codeIsUsedFirst) {
-				NotifyRoomChangedFullness(room.firstPlayerGuid, PARTIAL);
-			}
-
-			return;
-		}
+        }
 
 
 		DataModule2->ADOTable1->Next();
-
 	}
 }
 
@@ -127,77 +125,58 @@ guestCodeCheckInfo __fastcall TForm1::CheckGuestCode(int reqRoomId,
 													String guid) {
 	DataModule2->ADOTable1->First();
 
-	guestCodeCheckInfo checkInfo;
-
-	while (!DataModule2->ADOTable1->Eof) {
-		gameRoom room = dbContext.MapGameRoom(*DataModule2->ADOTable1->Fields);
-
-		if(reqRoomId == room.roomId) {
-			if (reqPlayerCode == room.firstCode) {
-				if(!room.codeIsUsedFirst) {
-					DataModule2->ADOTable1->Edit();
-					DataModule2->ADOTable1->Fields->
-						FieldByName("GuidFirst")->
-						AsString=guid;
-					DataModule2->ADOTable1->Fields->
-						FieldByName("CodeIsUsedFirst")->
-						AsBoolean=true;
-					DataModule2->ADOTable1->Post();
-
-					if(room.codeIsUsedSecond) {
-						NotifyRoomChangedFullness(room.secondPlayerGuid, FULL);
-					}
-
-					checkInfo = {
-						true,
-						room.move == 1,
-						room.codeIsUsedSecond
-					};
-
-					return checkInfo;
-				}
-			} else if (reqPlayerCode == room.secondCode) {
-				if(!room.codeIsUsedSecond) {
-					DataModule2->ADOTable1->Edit();
-					DataModule2->ADOTable1->Fields->
-						FieldByName("GuidSecond")->
-						AsString=guid;
-					DataModule2->ADOTable1->Fields->
-						FieldByName("CodeIsUsedSecond")->
-						AsBoolean=true;
-					DataModule2->ADOTable1->Post();
-
-					if(room.codeIsUsedFirst) {
-						NotifyRoomChangedFullness(room.firstPlayerGuid, FULL);
-					}
-
-                    checkInfo = {
-						true,
-						room.move == 2,
-						room.codeIsUsedFirst
-					};
-
-					return checkInfo;
-				}
-			} else {
-                checkInfo = {
-					false,
-					false,
-					false
-				};
-
-				return checkInfo;
-			}
-		}
-
-		DataModule2->ADOTable1->Next();
-	}
-
-    checkInfo = {
+	guestCodeCheckInfo checkInfo = {
 		false,
 		false,
 		false
 	};
+
+	while (!DataModule2->ADOTable1->Eof) {
+		int playerNumber = 0;
+		gameRoom room = dbContext.MapGameRoom(*DataModule2->ADOTable1->Fields);
+
+		if (reqRoomId == room.roomId) {
+			if (reqPlayerCode == room.firstCode) {
+				if(!room.codeIsUsedFirst) {
+					playerNumber = 1;
+                }
+			} else if (reqPlayerCode == room.secondCode) {
+				if(!room.codeIsUsedSecond) {
+                    playerNumber = 2;
+				}
+			} else {
+				return checkInfo;
+			}
+		}
+
+		if (playerNumber) {
+			DataModule2->ADOTable1->Edit();
+			DataModule2->ADOTable1->Fields->
+				FieldByName(playerNumber == 1 ? "GuidFirst" : "GuidSecond")->
+				AsString=guid;
+			DataModule2->ADOTable1->Fields->
+				FieldByName(playerNumber == 1 ? "CodeIsUsedFirst" : "CodeIsUsedSecond")->
+				AsBoolean=true;
+			DataModule2->ADOTable1->Post();
+
+			if (room.codeIsUsedFirst) {
+				NotifyRoomChangedFullness(room.firstPlayerGuid, FULL);
+			} else if (room.codeIsUsedSecond) {
+				NotifyRoomChangedFullness(room.secondPlayerGuid, FULL);
+			}
+
+			checkInfo = {
+				true,
+				playerNumber == 1 ? (room.move == 1) : (room.move == 2),
+				playerNumber == 1 ? room.codeIsUsedSecond : room.codeIsUsedFirst
+			};
+
+			return checkInfo;
+
+        }
+
+		DataModule2->ADOTable1->Next();
+	}
 
 	return checkInfo;
 }

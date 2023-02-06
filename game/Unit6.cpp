@@ -1,5 +1,3 @@
-//---------------------------------------------------------------------------
-
 #include <vcl.h>
 #pragma hdrstop
 
@@ -10,7 +8,7 @@
 #include <System.JSON.hpp>
 #include "Types.h"
 #include "ServiceWorker.h"
-//---------------------------------------------------------------------------
+
 #pragma package(smart_init)
 #pragma link "sgcBase_Classes"
 #pragma link "sgcSocket_Classes"
@@ -21,60 +19,29 @@
 #pragma link "sgcWebSocket_Client"
 #pragma resource "*.dfm"
 
-using namespace std;
 
+using namespace std;
 TForm6 *Form6;
-//---------------------------------------------------------------------------
+
+
 __fastcall TForm6::TForm6(TComponent* Owner)
 	: TForm(Owner)
 {
     connectionStatus = DISCONNECTED;
 }
-//---------------------------------------------------------------------------
+
+
 void __fastcall TForm6::Button1Click(TObject *Sender)
 {
 	sgcWebSocketClient1->Connect();
 }
-//---------------------------------------------------------------------------
+
+
 void __fastcall TForm6::Button2Click(TObject *Sender)
 {
 	sgcWebSocketClient1->Disconnect();
 }
-//---------------------------------------------------------------------------
-void __fastcall TForm6::sgcWebSocketClient1Connect(TsgcWSConnection *Connection)
-{
-	connectionStatus = CONNECTED;
 
-	worker.ChangeConnectionStatusUI(connectionStatus, *Label2);
-	worker.ChangeConnectionStatusUI(connectionStatus, *Form3->Label4);
-
-	LabeledEdit1->Enabled=true;
-	LabeledEdit2->Enabled=true;
-	LabeledEdit3->Enabled=true;
-	LabeledEdit4->Enabled=true;
-    LabeledEdit5->Enabled=true;
-	Button3->Enabled=true;
-
-	sgcWebSocketClient1->WriteData("Connected successfully!");
-}
-//---------------------------------------------------------------------------
-
-void __fastcall TForm6::sgcWebSocketClient1Disconnect(TsgcWSConnection *Connection,
-          int Code)
-{
-	connectionStatus = DISCONNECTED;
-
-	worker.ChangeConnectionStatusUI(connectionStatus, *Label2);
-	worker.ChangeConnectionStatusUI(connectionStatus, *Form3->Label4);
-
-	LabeledEdit1->Enabled=false;
-	LabeledEdit2->Enabled=false;
-	LabeledEdit3->Enabled=false;
-	LabeledEdit4->Enabled=false;
-	LabeledEdit5->Enabled=false;
-	Button3->Enabled=false;
-}
-//---------------------------------------------------------------------------
 
 void __fastcall TForm6::Button4Click(TObject *Sender)
 {
@@ -92,7 +59,8 @@ void __fastcall TForm6::Button4Click(TObject *Sender)
 		checkCodesRequest->Free();
 	}
 }
-//---------------------------------------------------------------------------
+
+
 void __fastcall TForm6::Button3Click(TObject *Sender)
 {
 	TJSONObject *generateRoomRequest = new TJSONObject();
@@ -105,12 +73,48 @@ void __fastcall TForm6::Button3Click(TObject *Sender)
 
 	generateRoomRequest->Free();
 }
-//---------------------------------------------------------------------------
+
+
+void __fastcall TForm6::sgcWebSocketClient1Connect(TsgcWSConnection *Connection)
+{
+	connectionStatus = CONNECTED;
+
+	worker.ChangeConnectionStatusUI(connectionStatus, *Label2);
+	worker.ChangeConnectionStatusUI(connectionStatus, *Form3->Label4);
+
+	LabeledEdit1->Enabled=true;
+	LabeledEdit2->Enabled=true;
+	LabeledEdit3->Enabled=true;
+	LabeledEdit4->Enabled=true;
+    LabeledEdit5->Enabled=true;
+	Button3->Enabled=true;
+
+	sgcWebSocketClient1->WriteData("Connected successfully!");
+}
+
+
+void __fastcall TForm6::sgcWebSocketClient1Disconnect(TsgcWSConnection *Connection,
+          int Code)
+{
+	connectionStatus = DISCONNECTED;
+
+	worker.ChangeConnectionStatusUI(connectionStatus, *Label2);
+	worker.ChangeConnectionStatusUI(connectionStatus, *Form3->Label4);
+
+	LabeledEdit1->Enabled=false;
+	LabeledEdit2->Enabled=false;
+	LabeledEdit3->Enabled=false;
+	LabeledEdit4->Enabled=false;
+	LabeledEdit5->Enabled=false;
+	Button3->Enabled=false;
+}
+
 
 void __fastcall TForm6::sgcWebSocketClient1Message(TsgcWSConnection *Connection,
 													const UnicodeString Text)
 {
-    TJSONObject *response = (TJSONObject*) TJSONObject::ParseJSONValue(Text, 0);
+	TJSONObject *response = (TJSONObject*) TJSONObject::ParseJSONValue(Text, 0);
+
 	if(response != NULL) {
         requests method = static_cast<requests>(
 			StrToInt(response->GetValue("method")->Value())
@@ -162,5 +166,4 @@ void __fastcall TForm6::sgcWebSocketClient1Message(TsgcWSConnection *Connection,
 
 	}
 }
-//---------------------------------------------------------------------------
 

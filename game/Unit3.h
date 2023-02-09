@@ -76,9 +76,9 @@ public:		// User declarations
 	void __fastcall EndGame(String winnerName);
 	void __fastcall NewGame();
 	void __fastcall UpdateRoomInfo();
-	void __fastcall ApplyOnlineMoveAnswer(moveResultAnswer);
+	void __fastcall ApplyOnlineMoveAnswer(moveAnswer);
 
-	moveResultAnswer __fastcall CheckOnlineAttack(int, int);
+	moveAnswer __fastcall CheckOnlineAttack(int, int);
 	String GetMoveResultText(pair<moveResults, int>&);
     String GetCoordsText(int, int);
 

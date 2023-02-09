@@ -44,7 +44,7 @@ enum roomStatuses {
     NONE
 };
 
-struct moveResultAnswer {
+struct moveAnswer {
 	int killedShipLen;
 	bool isLosed;
 	moveResults moveResult;

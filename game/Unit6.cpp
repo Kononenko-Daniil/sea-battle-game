@@ -171,13 +171,13 @@ void __fastcall TForm6::sgcWebSocketClient1Message(TsgcWSConnection *Connection,
 				String interrogatorGuid = response->GetValue("interrogator_guid")->
 					Value();
 
-				moveResultAnswer moveAnswer = Form3->CheckOnlineAttack(row, col);
+				moveAnswer _moveAnswer = Form3->CheckOnlineAttack(row, col);
 				TJSONObject *moveAnswerResponse = new TJSONObject();
 
 				moveAnswerResponse->AddPair("method", MOVE_ANSWER);
-				moveAnswerResponse->AddPair("killed_ship_len", moveAnswer.killedShipLen);
-				moveAnswerResponse->AddPair("is_losed", moveAnswer.isLosed);
-				moveAnswerResponse->AddPair("move_result", moveAnswer.moveResult);
+				moveAnswerResponse->AddPair("killed_ship_len", _moveAnswer.killedShipLen);
+				moveAnswerResponse->AddPair("is_losed", _moveAnswer.isLosed);
+				moveAnswerResponse->AddPair("move_result", _moveAnswer.moveResult);
 				moveAnswerResponse->AddPair("target_guid", interrogatorGuid);
 
 
@@ -189,7 +189,7 @@ void __fastcall TForm6::sgcWebSocketClient1Message(TsgcWSConnection *Connection,
 				break;
 			}
 			case MOVE_ANSWER: {
-				moveResultAnswer moveAnswer {
+				moveAnswer _moveAnswer {
 					StrToInt(response->GetValue("killed_ship_len")->Value()),
 					StrToBool(response->GetValue("is_losed")->Value()),
 					static_cast<moveResults>(
@@ -197,7 +197,7 @@ void __fastcall TForm6::sgcWebSocketClient1Message(TsgcWSConnection *Connection,
 					)
 				};
 
-				Form3->ApplyOnlineMoveAnswer(moveAnswer);
+				Form3->ApplyOnlineMoveAnswer(_moveAnswer);
 
                 break;
 			}

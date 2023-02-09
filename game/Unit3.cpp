@@ -375,7 +375,7 @@ void __fastcall TForm3::UpdateRoomInfo() {
 }
 
 
-void __fastcall TForm3::ApplyOnlineMoveAnswer(moveResultAnswer answer) {
+void __fastcall TForm3::ApplyOnlineMoveAnswer(moveAnswer answer) {
 	int res_cell = 1;
 
 	if(answer.moveResult == HIT) {
@@ -402,7 +402,7 @@ void __fastcall TForm3::ApplyOnlineMoveAnswer(moveResultAnswer answer) {
 }
 
 
-moveResultAnswer __fastcall TForm3::CheckOnlineAttack(int row, int col) {
+moveAnswer __fastcall TForm3::CheckOnlineAttack(int row, int col) {
 	pair<int, int> enemyMoveCoords = make_pair(row, col);
 	pair<moveResults, int> enemyMoveResult =
 		myField.ChangeCellByHit(enemyMoveCoords);
@@ -419,7 +419,7 @@ moveResultAnswer __fastcall TForm3::CheckOnlineAttack(int row, int col) {
 
     statusBar.moveStatus = MINE;
 
-	moveResultAnswer moveAnswer = {
+	moveAnswer _moveAnswer = {
 		enemyMoveResult.second,
 		isMeLosed,
         enemyMoveResult.first
@@ -427,5 +427,5 @@ moveResultAnswer __fastcall TForm3::CheckOnlineAttack(int row, int col) {
 
     DrawGrid1->Refresh();
 
-	return moveAnswer;
+	return _moveAnswer;
 }

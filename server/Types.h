@@ -6,7 +6,9 @@
 enum requests : int {
 	CHECK_GUEST_CODE,
 	GENERATE_ROOM,
-	NOTIFY_ROOM_CHANGED_FULLNESS
+	NOTIFY_ROOM_CHANGED_FULLNESS,
+	MOVE,
+    MOVE_ANSWER
 };
 
 enum roomFullness {

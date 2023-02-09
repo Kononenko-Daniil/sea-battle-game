@@ -10,6 +10,7 @@
 
 #include "Types.h"
 
+#include <System.JSON.hpp>
 #include <fstream>
 
 #pragma package(smart_init)
@@ -21,10 +22,6 @@ TForm3 *Form3;
 
 
 __fastcall TForm3::TForm3(TComponent* Owner) : TForm(Owner){
-	envProps = {
-		-1, -1,
-		false, false
-    };
 }
 
 
@@ -59,6 +56,7 @@ void __fastcall TForm3::DrawGrid2SelectCell(TObject *Sender,
 											int ARow,
 											bool &CanSelect) {
 	if (statusBar.moveStatus == MINE && statusBar.gameStatus == RUNNING) {
+        statusBar.myLastMoveCoords = make_pair(ARow, ACol);
 		if(statusBar.gameType == COMPUTER) {
 			if(enemyField.field[ARow][ACol] == 0){
 				pair<int, int> cellCoords = make_pair(ARow, ACol);
@@ -76,7 +74,7 @@ void __fastcall TForm3::DrawGrid2SelectCell(TObject *Sender,
 				if(isEnemyLosed) {
 					EndGame("Player");
 				} else {
-                    pair<int, int> enemyMoveCoords = computerEnemy.MoveAction();
+					pair<int, int> enemyMoveCoords = computerEnemy.MoveAction();
 					pair<moveResults, int> enemyMoveResult =
 						myField.ChangeCellByHit(enemyMoveCoords);
 					CreateMoveLogInfo(ENEMY,
@@ -88,7 +86,7 @@ void __fastcall TForm3::DrawGrid2SelectCell(TObject *Sender,
 					bool isMeLosed = myField.CheckLose();
 
 					if(isMeLosed) {
-                        EndGame("Enemy");
+						EndGame("Enemy");
 					}
 				}
 
@@ -99,7 +97,21 @@ void __fastcall TForm3::DrawGrid2SelectCell(TObject *Sender,
 				Form5->DrawGrid2->Refresh();
             }
 		} else if (statusBar.gameType == ONLINE) {
+			TJSONObject *moveRequest = new TJSONObject();
 
+            moveRequest->AddPair("method", MOVE);
+			moveRequest->AddPair("row", ARow);
+			moveRequest->AddPair("col", ACol);
+
+			String moveRequest_str = moveRequest->ToString();
+
+			Form6->sgcWebSocketClient1->WriteData(moveRequest_str);
+
+			moveRequest->Free();
+
+			CreateMoveCoordsLogInfo(MINE, ARow, ACol);
+
+            statusBar.moveStatus = ENEMY;
         }
     }
 }
@@ -170,6 +182,11 @@ void __fastcall TForm3::N2Click(TObject *Sender)
 void __fastcall TForm3::N4Click(TObject *Sender)
 {
 	statusBar.gameType = COMPUTER;
+	statusBar.roomId = -1;
+	statusBar.playerCode = -1;
+	statusBar.roomStatus = NONE;
+
+    Form6->Close();
 
 	NewGame();
 }
@@ -177,10 +194,10 @@ void __fastcall TForm3::N4Click(TObject *Sender)
 
 void __fastcall TForm3::N5Click(TObject *Sender)
 {
-	statusBar.gameType = ONLINE;
-
 	NewGame();
 
+	statusBar.gameType = ONLINE;
+    statusBar.gameStatus=RUNNING;
 	Label4->Visible=true;
 	Button2->Visible=true;
 
@@ -268,6 +285,8 @@ void __fastcall TForm3::NewGame() {
 	DrawGrid2->Refresh();
 	Form5->DrawGrid1->Refresh();
 	Form5->DrawGrid2->Refresh();
+
+    Form6->sgcWebSocketClient1->Disconnect();
 }
 
 
@@ -280,26 +299,8 @@ void __fastcall TForm3::CreateMoveLogInfo(moveStatuses sender,
 											pair<moveResults, int>& moveResult,
 											int row,
 											int col) {
-	String logMessage = (sender == MINE ? "Me: " : "Enemy: ") + String(worker.GetLetterByNumber(col)) +
-		IntToStr(row) + " - ";
-	switch(moveResult.first) {
-		case HIT: {
-			logMessage += "HIT.";
-			break;
-		}
-		case MISS: {
-			logMessage += "MISS.";
-			break;
-		}
-		case KILL: {
-			logMessage += "KILL. " + IntToStr(moveResult.second+1) + "-cell ship.";
-			break;
-		}
-		case ERR: {
-			logMessage = "";
-			break;
-		}
-	}
+	String logMessage = (sender == MINE ? "Me: " : "Enemy: ") +
+		GetCoordsText(row, col) + " - " + GetMoveResultText(moveResult);
 
 	if(logMessage != "") {
 		Log(logMessage);
@@ -307,10 +308,124 @@ void __fastcall TForm3::CreateMoveLogInfo(moveStatuses sender,
 }
 
 
-void TForm3::UpdateRoomInfo() {
-	Panel2->Caption = IntToStr(envProps.roomId) + "-" +
-						IntToStr(envProps.playerCode) + "-" +
-						(envProps.isMyMove ? "my move" : "enemy`s move") + "-" +
-						(envProps.isRoomFull? "room is full" : "wait players");
+void __fastcall TForm3::CreateMoveResultLogInfo(moveStatuses sender,
+											pair<moveResults, int>& moveResult) {
+	String logMessage = (sender == MINE ? "Me: " : "Enemy: ") +
+		GetMoveResultText(moveResult);
+
+
+	if(logMessage != "") {
+		Log(logMessage);
+	}
 }
 
+
+void __fastcall TForm3::CreateMoveCoordsLogInfo(moveStatuses sender, int row, int col) {
+	String logMessage = (sender == MINE ? "Me: " : "Enemy: ") +
+		GetCoordsText(row, col);
+
+
+	if(logMessage != "") {
+		Log(logMessage);
+	}
+}
+
+
+String TForm3::GetCoordsText(int row, int col) {
+	String text = String(worker.GetLetterByNumber(col)) +
+		IntToStr(row+1);
+
+    return text;
+}
+
+
+String TForm3::GetMoveResultText(pair<moveResults, int>& moveResult) {
+	String text = "";
+
+	switch(moveResult.first) {
+		case HIT: {
+			text += "HIT.";
+			break;
+		}
+		case MISS: {
+			text += "MISS.";
+			break;
+		}
+		case KILL: {
+			text += "KILL. " + IntToStr(moveResult.second+1) + "-cell ship.";
+			break;
+		}
+		case ERR: {
+			text = "";
+			break;
+		}
+	}
+
+    return text;
+}
+
+
+void __fastcall TForm3::UpdateRoomInfo() {
+	String roomStatus_str = statusBar.GetRoomStatusStr();
+
+	Panel2->Caption = IntToStr(statusBar.roomId) + "-" +
+						IntToStr(statusBar.playerCode) + "-" +
+						(statusBar.moveStatus == MINE ? "my move" : "enemy`s move") + "-" +
+						roomStatus_str;
+}
+
+
+void __fastcall TForm3::ApplyOnlineMoveAnswer(moveResultAnswer answer) {
+	int res_cell = 1;
+
+	if(answer.moveResult == HIT) {
+		res_cell = 5;
+	} else if(answer.moveResult == KILL) {
+		enemyField.KillShip(statusBar.myLastMoveCoords);
+        res_cell = 6;
+    }
+
+    enemyField.field[statusBar.myLastMoveCoords.first]
+		[statusBar.myLastMoveCoords.second] = res_cell;
+
+	pair<moveResults, int> moveResultInfo =
+		make_pair(answer.moveResult, answer.killedShipLen);
+
+	CreateMoveResultLogInfo(ENEMY, moveResultInfo);
+
+	if(answer.isLosed) {
+        EndGame("Player");
+	}
+
+
+    DrawGrid2->Refresh();
+}
+
+
+moveResultAnswer __fastcall TForm3::CheckOnlineAttack(int row, int col) {
+	pair<int, int> enemyMoveCoords = make_pair(row, col);
+	pair<moveResults, int> enemyMoveResult =
+		myField.ChangeCellByHit(enemyMoveCoords);
+	CreateMoveLogInfo(ENEMY,
+						enemyMoveResult,
+						enemyMoveCoords.first,
+						enemyMoveCoords.second);
+
+	bool isMeLosed = myField.CheckLose();
+
+	if(isMeLosed) {
+        EndGame("Enemy");
+	}
+
+    statusBar.moveStatus = MINE;
+
+	moveResultAnswer moveAnswer = {
+		enemyMoveResult.second,
+		isMeLosed,
+        enemyMoveResult.first
+	};
+
+    DrawGrid1->Refresh();
+
+	return moveAnswer;
+}

@@ -4,6 +4,7 @@
 #define GameStatusBarH
 
 #include "Types.h"
+#include <vcl.h>
 
 class GameStatusBar {
 	public:
@@ -11,6 +12,14 @@ class GameStatusBar {
 		gameTypes gameType;
 		gameStatuses gameStatus;
 		moveStatuses moveStatus;
+
+		roomStatuses roomStatus;
+		int roomId;
+		int playerCode;
+
+        std::pair<int, int> myLastMoveCoords;
+
+		String GetRoomStatusStr();
 
 		GameStatusBar();
 };

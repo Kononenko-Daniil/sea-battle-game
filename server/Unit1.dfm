@@ -8522,6 +8522,7 @@ object Form1: TForm1
       item
         Expanded = False
         FieldName = 'GuidFirst'
+        Width = 250
         Visible = True
       end
       item

@@ -33,14 +33,21 @@ enum connectionStatuses {
 enum requests {
 	CHECK_GUEST_CODE,
 	GENERATE_ROOM,
-    NOTIFY_ROOM_CHANGED_FULLNESS
+	NOTIFY_ROOM_CHANGED_FULLNESS,
+	MOVE,
+    MOVE_ANSWER
 };
 
-struct EnvironmentProperties {
-	int roomId;
-	int playerCode;
-	bool isMyMove;
-    bool isRoomFull;
+enum roomStatuses {
+	FULL,
+	PARTIAL,
+    NONE
+};
+
+struct moveResultAnswer {
+	int killedShipLen;
+	bool isLosed;
+	moveResults moveResult;
 };
 //---------------------------------------------------------------------------
 #endif

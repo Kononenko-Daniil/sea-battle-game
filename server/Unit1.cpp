@@ -205,9 +205,33 @@ gameRoomInfo TForm1::GenerateRoom() {
 
 	DataModule2->ADOTable1->Last();
 
-    roomInfo.roomId = DataModule2->ADOTable1->Fields->FieldByName("RoomId")->AsInteger;
+	roomInfo.roomId = DataModule2->ADOTable1->Fields->FieldByName("RoomId")->AsInteger;
 
     return roomInfo;
+}
+
+
+String TForm1::GetTargetPlayerGuid(String guid) {
+	DataModule2->ADOTable1->First();
+
+	while(!DataModule2->ADOTable1->Eof) {
+		String targetPlayerGuid;
+		gameRoom room = dbContext.MapGameRoom(*DataModule2->ADOTable1->Fields);
+
+		if(room.firstPlayerGuid == guid) {
+			targetPlayerGuid = room.secondPlayerGuid;
+
+			return targetPlayerGuid;
+		} else if (room.secondPlayerGuid == guid) {
+			targetPlayerGuid = room.firstPlayerGuid;
+
+            return targetPlayerGuid;
+		}
+
+		DataModule2->ADOTable1->Next();
+	}
+
+    return "";
 }
 
 
@@ -224,6 +248,8 @@ void __fastcall TForm1::sgcWebSocketServer1Message(TsgcWSConnection *Connection,
 		requests method = static_cast<requests>(
 			StrToInt(request->GetValue("method")->Value())
 		);
+
+        response->AddPair("method", method);
 
 		switch(method) {
 			case CHECK_GUEST_CODE: {
@@ -252,14 +278,44 @@ void __fastcall TForm1::sgcWebSocketServer1Message(TsgcWSConnection *Connection,
 				response->AddPair("secondCode", roomInfo.secondCode);
 
 				break;
+			}
+			case MOVE: {
+				int row = StrToInt(request->GetValue("row")->Value());
+				int col = StrToInt(request->GetValue("col")->Value());
+
+				String targetGuid = GetTargetPlayerGuid(guid);
+				if(targetGuid != "") {
+					response->AddPair("row", row);
+					response->AddPair("col", col);
+					response->AddPair("interrogator_guid", guid);
+
+					String response_str = response->ToString();
+
+					sgcWebSocketServer1->WriteData(targetGuid, response_str);
+
+					response->Free();
+
+                    return;
+				}
+
+				break;
+			}
+			case MOVE_ANSWER: {
+				String targetGuid = request->GetValue("target_guid")->Value();
+
+				sgcWebSocketServer1->WriteData(targetGuid, Text);
+
+				return;
             }
 		}
 
-        response->AddPair("method", method);
+
 
 		String response_str = response->ToString();
 
 		sgcWebSocketServer1->WriteData(guid, response_str);
+
+        response->Free();
 	}
 
 	request->Free();

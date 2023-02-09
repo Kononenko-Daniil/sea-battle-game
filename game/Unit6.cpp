@@ -127,10 +127,10 @@ void __fastcall TForm6::sgcWebSocketClient1Message(TsgcWSConnection *Connection,
 				bool isRoomFull = StrToBool(response->GetValue("room_is_full")->Value());
 
 				if(codeStatus) {
-					Form3->envProps.roomId = StrToInt(Form6->LabeledEdit1->Text);
-					Form3->envProps.playerCode = StrToInt(Form6->LabeledEdit5->Text);
-					Form3->envProps.isMyMove = isMyMove;
-					Form3->envProps.isRoomFull = isRoomFull;
+					Form3->statusBar.roomId = StrToInt(Form6->LabeledEdit1->Text);
+					Form3->statusBar.playerCode = StrToInt(Form6->LabeledEdit5->Text);
+					Form3->statusBar.moveStatus = isMyMove ? MINE : ENEMY;
+					Form3->statusBar.roomStatus = isRoomFull ? FULL : PARTIAL;
 
 					Label6->Caption="SUCCESS";
 					Label6->Font->Color=clGreen;
@@ -156,13 +156,52 @@ void __fastcall TForm6::sgcWebSocketClient1Message(TsgcWSConnection *Connection,
 			}
 			case NOTIFY_ROOM_CHANGED_FULLNESS: {
 				bool isRoomFull = StrToBool(response->GetValue("room_is_full")->Value());
-				Form3->envProps.isRoomFull = isRoomFull;
+
+				if(isRoomFull)
+                    Form3->statusBar.gameStatus=RUNNING;
+				Form3->statusBar.roomStatus = isRoomFull ? FULL : PARTIAL;
 
                 Form3->UpdateRoomInfo();
 
                 break;
-            }
-        }
+			}
+			case MOVE: {
+				int row = StrToInt(response->GetValue("row")->Value());
+				int col = StrToInt(response->GetValue("col")->Value());
+				String interrogatorGuid = response->GetValue("interrogator_guid")->
+					Value();
+
+				moveResultAnswer moveAnswer = Form3->CheckOnlineAttack(row, col);
+				TJSONObject *moveAnswerResponse = new TJSONObject();
+
+				moveAnswerResponse->AddPair("method", MOVE_ANSWER);
+				moveAnswerResponse->AddPair("killed_ship_len", moveAnswer.killedShipLen);
+				moveAnswerResponse->AddPair("is_losed", moveAnswer.isLosed);
+				moveAnswerResponse->AddPair("move_result", moveAnswer.moveResult);
+				moveAnswerResponse->AddPair("target_guid", interrogatorGuid);
+
+
+				String moveAnswerResponse_str = moveAnswerResponse->ToString();
+				sgcWebSocketClient1->WriteData(moveAnswerResponse_str);
+
+				moveAnswerResponse->Free();
+
+				break;
+			}
+			case MOVE_ANSWER: {
+				moveResultAnswer moveAnswer {
+					StrToInt(response->GetValue("killed_ship_len")->Value()),
+					StrToBool(response->GetValue("is_losed")->Value()),
+					static_cast<moveResults>(
+						StrToInt(response->GetValue("move_result")->Value())
+					)
+				};
+
+				Form3->ApplyOnlineMoveAnswer(moveAnswer);
+
+                break;
+			}
+		}
 
 	}
 }

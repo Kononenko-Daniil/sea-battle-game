@@ -61,6 +61,7 @@ public:		// User declarations
 
 	guestCodeCheckInfo __fastcall CheckGuestCode(int, int, String);
 	gameRoomInfo __fastcall GenerateRoom();
+    String GetTargetPlayerGuid(String);
 
     DbContextService dbContext;
 };

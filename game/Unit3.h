@@ -71,9 +71,17 @@ public:		// User declarations
 	void __fastcall DrawField(SeaField&, TDrawGrid&, int, int, TRect&);
 	void __fastcall Log(String);
 	void __fastcall CreateMoveLogInfo(moveStatuses, pair<moveResults, int>&, int, int);
+	void __fastcall CreateMoveResultLogInfo(moveStatuses, pair<moveResults, int>&);
+	void __fastcall CreateMoveCoordsLogInfo(moveStatuses, int, int);
 	void __fastcall EndGame(String winnerName);
 	void __fastcall NewGame();
-    void __fastcall UpdateRoomInfo();
+	void __fastcall UpdateRoomInfo();
+	void __fastcall ApplyOnlineMoveAnswer(moveResultAnswer);
+
+	moveResultAnswer __fastcall CheckOnlineAttack(int, int);
+	String GetMoveResultText(pair<moveResults, int>&);
+    String GetCoordsText(int, int);
+
 
     SeaField myField;
 	SeaField enemyField;
@@ -81,7 +89,6 @@ public:		// User declarations
 	Constants constants;
 	ServiceWorker worker;
 	GameStatusBar statusBar;
-    EnvironmentProperties envProps;
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TForm3 *Form3;

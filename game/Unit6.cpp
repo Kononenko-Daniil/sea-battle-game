@@ -45,19 +45,35 @@ void __fastcall TForm6::Button2Click(TObject *Sender)
 
 void __fastcall TForm6::Button4Click(TObject *Sender)
 {
-	if(LabeledEdit1->Text != "" && LabeledEdit5->Text != "") {
-		TJSONObject *checkCodesRequest = new TJSONObject();
+	if(Form3->statusBar.fieldFileIsUploaded){
+        if(LabeledEdit1->Text != "" && LabeledEdit5->Text != "") {
+			TJSONObject *checkCodesRequest = new TJSONObject();
 
-		checkCodesRequest->AddPair("method", CHECK_GUEST_CODE);
-		checkCodesRequest->AddPair("room_id", LabeledEdit1->Text);
-		checkCodesRequest->AddPair("player_code", LabeledEdit5->Text);
+			checkCodesRequest->AddPair("method", CHECK_GUEST_CODE);
+			checkCodesRequest->AddPair("room_id", LabeledEdit1->Text);
+			checkCodesRequest->AddPair("player_code", LabeledEdit5->Text);
 
-		String request = checkCodesRequest->ToString();
+			String request = checkCodesRequest->ToString();
 
-		sgcWebSocketClient1->WriteData(request);
+			sgcWebSocketClient1->WriteData(request);
 
-		checkCodesRequest->Free();
-	}
+			checkCodesRequest->Free();
+
+			Form3->Button1->Enabled=false;
+			Form3->Button4->Enabled=false;
+            Form3->Button3->Enabled=false;
+			Form3->N1->Enabled=true;
+			Form3->N2->Enabled=false;
+			Form3->N7->Enabled=true;
+			Form3->N8->Enabled=true;
+			Form3->N3->Enabled=false;
+			Form3->N6->Enabled=false;
+		} else {
+			ShowMessage(constants.ROOM_ID_EDIT_FIELD_EMPTY_MESSAGE);
+		}
+	} else {
+		ShowMessage(constants.ROOM_CONNECT_FIELD_EMPTY_MESSAGE);
+    }
 }
 
 
@@ -88,8 +104,6 @@ void __fastcall TForm6::sgcWebSocketClient1Connect(TsgcWSConnection *Connection)
 	LabeledEdit4->Enabled=true;
     LabeledEdit5->Enabled=true;
 	Button3->Enabled=true;
-
-	sgcWebSocketClient1->WriteData("Connected successfully!");
 }
 
 
@@ -139,6 +153,7 @@ void __fastcall TForm6::sgcWebSocketClient1Message(TsgcWSConnection *Connection,
 				} else {
 					Label6->Caption="ERROR";
 					Label6->Font->Color=clRed;
+                    ShowMessage(constants.ROOM_PARAMETRS_INCORRECT_MESSAGE);
                 }
 
 				break;

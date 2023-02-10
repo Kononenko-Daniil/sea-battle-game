@@ -57,11 +57,11 @@ public:		// User declarations
 
 	void __fastcall Log(String);
 	void __fastcall NotifyRoomChangedFullness(String, roomFullness);
-    void __fastcall DisconnectPlayerFromRoom(String);
+	void __fastcall DisconnectPlayerFromRoom(String);
 
 	guestCodeCheckInfo __fastcall CheckGuestCode(int, int, String);
 	gameRoomInfo __fastcall GenerateRoom();
-    String GetTargetPlayerGuid(String);
+	String __fastcall GetTargetPlayerGuid(String);
 
     DbContextService dbContext;
 };

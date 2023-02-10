@@ -8582,16 +8582,6 @@ object Form3: TForm3
       TabOrder = 3
       OnClick = Button4Click
     end
-    object Button2: TButton
-      Left = 135
-      Top = 40
-      Width = 170
-      Height = 25
-      Caption = #1043#1086#1090#1086#1074' '#1082' '#1087#1072#1088#1090#1080#1080
-      Enabled = False
-      TabOrder = 4
-      Visible = False
-    end
   end
   object Panel2: TPanel
     Left = 343

@@ -112,7 +112,7 @@ void __fastcall TForm1::DisconnectPlayerFromRoom(String playerGuid) {
 			}
 
 			break;
-        }
+		}
 
 
 		DataModule2->ADOTable1->Next();
@@ -173,7 +173,7 @@ guestCodeCheckInfo __fastcall TForm1::CheckGuestCode(int reqRoomId,
 
 			return checkInfo;
 
-        }
+		}
 
 		DataModule2->ADOTable1->Next();
 	}
@@ -211,7 +211,7 @@ gameRoomInfo TForm1::GenerateRoom() {
 }
 
 
-String TForm1::GetTargetPlayerGuid(String guid) {
+String __fastcall TForm1::GetTargetPlayerGuid(String guid) {
 	DataModule2->ADOTable1->First();
 
 	while(!DataModule2->ADOTable1->Eof) {
@@ -225,13 +225,13 @@ String TForm1::GetTargetPlayerGuid(String guid) {
 		} else if (room.secondPlayerGuid == guid) {
 			targetPlayerGuid = room.firstPlayerGuid;
 
-            return targetPlayerGuid;
+			return targetPlayerGuid;
 		}
 
 		DataModule2->ADOTable1->Next();
 	}
 
-    return "";
+	return "";
 }
 
 

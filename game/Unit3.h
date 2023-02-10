@@ -46,7 +46,6 @@ __published:	// IDE-managed Components
 	TMenuItem *N8;
 	TButton *Button4;
 	TLabel *Label4;
-	TButton *Button2;
 	TPanel *Panel2;
 	void __fastcall DrawGrid1DrawCell(TObject *Sender, int ACol, int ARow, TRect &Rect,
           TGridDrawState State);

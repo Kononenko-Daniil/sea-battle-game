@@ -58,6 +58,7 @@ public:		// User declarations
 
     connectionStatuses connectionStatus;
 	ServiceWorker worker;
+    Constants constants;
 };
 
 extern PACKAGE TForm6 *Form6;

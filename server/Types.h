@@ -16,6 +16,13 @@ enum roomFullness {
     PARTIAL
 };
 
+enum moveResults {
+	HIT,
+	KILL,
+	MISS,
+	ERR
+};
+
 struct gameRoom {
 	int roomId, firstCode, secondCode, move;
 	bool codeIsUsedFirst, codeIsUsedSecond;

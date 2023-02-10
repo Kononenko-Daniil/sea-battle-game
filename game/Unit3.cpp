@@ -74,19 +74,24 @@ void __fastcall TForm3::DrawGrid2SelectCell(TObject *Sender,
 				if(isEnemyLosed) {
 					EndGame("Player");
 				} else {
-					pair<int, int> enemyMoveCoords = computerEnemy.MoveAction();
-					pair<moveResults, int> enemyMoveResult =
-						myField.ChangeCellByHit(enemyMoveCoords);
-					CreateMoveLogInfo(ENEMY,
-										enemyMoveResult,
-										enemyMoveCoords.first,
-										enemyMoveCoords.second);
-					computerEnemy.playerField.ApplyUsedCells(myField);
+					if(!(moveResult.first==HIT || moveResult.first==KILL)) {
+						pair<moveResults, int> enemyMoveResult = make_pair(HIT, 0);
+						while(enemyMoveResult.first==HIT || enemyMoveResult.first==KILL) {
+							pair<int, int> enemyMoveCoords = computerEnemy.MoveAction();
+							enemyMoveResult = myField.ChangeCellByHit(enemyMoveCoords);
+							CreateMoveLogInfo(ENEMY,
+												enemyMoveResult,
+												enemyMoveCoords.first,
+												enemyMoveCoords.second);
+							computerEnemy.playerField.ApplyUsedCells(myField);
 
-					bool isMeLosed = myField.CheckLose();
+							bool isMeLosed = myField.CheckLose();
 
-					if(isMeLosed) {
-						EndGame("Enemy");
+							if(isMeLosed) {
+								EndGame("Enemy");
+                                break;
+							}
+						}
 					}
 				}
 
@@ -97,21 +102,25 @@ void __fastcall TForm3::DrawGrid2SelectCell(TObject *Sender,
 				Form5->DrawGrid2->Refresh();
             }
 		} else if (statusBar.gameType == ONLINE) {
-			TJSONObject *moveRequest = new TJSONObject();
+			if(enemyField.field[ARow][ACol] == 0){
+				if(statusBar.roomStatus == FULL) {
+                    TJSONObject *moveRequest = new TJSONObject();
 
-            moveRequest->AddPair("method", MOVE);
-			moveRequest->AddPair("row", ARow);
-			moveRequest->AddPair("col", ACol);
+					moveRequest->AddPair("method", MOVE);
+					moveRequest->AddPair("row", ARow);
+					moveRequest->AddPair("col", ACol);
 
-			String moveRequest_str = moveRequest->ToString();
+					String moveRequest_str = moveRequest->ToString();
 
-			Form6->sgcWebSocketClient1->WriteData(moveRequest_str);
+					Form6->sgcWebSocketClient1->WriteData(moveRequest_str);
 
-			moveRequest->Free();
+					moveRequest->Free();
 
-			CreateMoveCoordsLogInfo(MINE, ARow, ACol);
+					CreateMoveCoordsLogInfo(MINE, ARow, ACol);
 
-            statusBar.moveStatus = ENEMY;
+					statusBar.moveStatus = ENEMY;
+                }
+            }
         }
     }
 }
@@ -171,10 +180,7 @@ void __fastcall TForm3::N2Click(TObject *Sender)
 
 		if(statusBar.gameType == COMPUTER){
 			Button1->Enabled = true;
-		} else {
-			Button2->Enabled=true;
 		}
-
 	}
 }
 
@@ -199,7 +205,6 @@ void __fastcall TForm3::N5Click(TObject *Sender)
 	statusBar.gameType = ONLINE;
     statusBar.gameStatus=RUNNING;
 	Label4->Visible=true;
-	Button2->Visible=true;
 
     Form6->Show();
 }
@@ -272,13 +277,13 @@ void __fastcall TForm3::NewGame() {
 	CheckBox1->Checked=false;
 	Button1->Enabled=false;
 	Button4->Enabled=true;
+	Button3->Enabled=true;
+    Panel2->Caption="";
 	N1->Enabled=true;
     N2->Enabled=true;
 	N3->Enabled=true;
 	N6->Enabled=true;
 	Label4->Visible=false;
-	Button2->Visible=false;
-    Button2->Enabled=false;
 
     // Refresh Grids
 	DrawGrid1->Refresh();
@@ -286,7 +291,7 @@ void __fastcall TForm3::NewGame() {
 	Form5->DrawGrid1->Refresh();
 	Form5->DrawGrid2->Refresh();
 
-    Form6->sgcWebSocketClient1->Disconnect();
+	Form6->sgcWebSocketClient1->Disconnect();
 }
 
 
@@ -383,6 +388,10 @@ void __fastcall TForm3::ApplyOnlineMoveAnswer(moveAnswer answer) {
 	} else if(answer.moveResult == KILL) {
 		enemyField.KillShip(statusBar.myLastMoveCoords);
         res_cell = 6;
+	}
+
+	if(answer.moveResult==HIT || answer.moveResult==KILL) {
+        statusBar.moveStatus = MINE;
     }
 
     enemyField.field[statusBar.myLastMoveCoords.first]
@@ -417,7 +426,10 @@ moveAnswer __fastcall TForm3::CheckOnlineAttack(int row, int col) {
         EndGame("Enemy");
 	}
 
-    statusBar.moveStatus = MINE;
+	if(!(enemyMoveResult.first==HIT || enemyMoveResult.first==KILL)) {
+        statusBar.moveStatus = MINE;
+	}
+
 
 	moveAnswer _moveAnswer = {
 		enemyMoveResult.second,
@@ -429,3 +441,4 @@ moveAnswer __fastcall TForm3::CheckOnlineAttack(int row, int col) {
 
 	return _moveAnswer;
 }
+
